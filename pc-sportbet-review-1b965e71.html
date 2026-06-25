@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.6">
+  <title>足彩竞猜 · 信息索引站</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f2f4f6;
+      color: #1e2a3a;
+      line-height: 1.7;
+      padding: 2rem 1.2rem;
+    }
+
+    .page {
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    /* hero 横幅 */
+    .hero {
+      background: linear-gradient(145deg, #e8ecf0 0%, #dbe0e6 100%);
+      border-radius: 1.8rem;
+      padding: 2.8rem 2.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6);
+      border: 1px solid rgba(195, 207, 217, 0.4);
+      transition: box-shadow 0.2s;
+    }
+
+    .hero:hover {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .hero h1 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #14202e;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero .sub {
+      font-size: 1.05rem;
+      color: #3f5165;
+      max-width: 38rem;
+      border-left: 3px solid #7a8b9e;
+      padding-left: 1.2rem;
+    }
+
+    /* 卡片系统 */
+    .card-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 1.4rem;
+      padding: 1.8rem 2rem;
+      border: 1px solid #d8dfe7;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      transition: transform 0.15s ease, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+      border-color: #c5d0db;
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: #1b2a3c;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid #e2e8ef;
+    }
+
+    .card p {
+      margin-bottom: 0.9rem;
+      color: #2c3d52;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-link {
+      color: #1d5d8e;
+      text-decoration: none;
+      border-bottom: 1px solid #b8cadc;
+      transition: border-color 0.2s, background 0.2s;
+      font-weight: 500;
+      padding: 0 0.15rem;
+    }
+
+    .highlight-link:hover {
+      border-bottom-color: #1d5d8e;
+      background: #e6edf5;
+      border-radius: 0.2rem;
+    }
+
+    /* 页尾 */
+    .page-footer {
+      margin-top: 3rem;
+      padding: 1.2rem 0.8rem;
+      text-align: center;
+      border-top: 1px solid #d1dbe4;
+      font-size: 0.9rem;
+      color: #5b6f83;
+    }
+
+    .page-footer a {
+      color: #1d5d8e;
+      text-decoration: none;
+      border-bottom: 1px dotted #a3b7cb;
+    }
+
+    .page-footer a:hover {
+      border-bottom-style: solid;
+    }
+
+    /* 响应式 */
+    @media (min-width: 640px) {
+      body {
+        padding: 3rem 2rem;
+      }
+
+      .hero {
+        padding: 3.2rem 3rem;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .card {
+        padding: 2rem 2.4rem;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .hero h1 {
+        font-size: 2.6rem;
+      }
+
+      .hero .sub {
+        font-size: 1.15rem;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.8rem;
+      }
+
+      .card.full {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* 小细节 */
+    .inline-tag {
+      background: #e9eef3;
+      color: #2c4156;
+      border-radius: 2rem;
+      padding: 0.1rem 0.7rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-right: 0.3rem;
+    }
+
+    .footnote {
+      font-size: 0.92rem;
+      color: #5d7187;
+      margin-top: 0.8rem;
+      padding: 0.6rem 0 0 0;
+      border-top: 1px solid #e3eaf1;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- Hero 横幅：资料整理视角 -->
+  <header class="hero">
+    <h1>足彩竞猜 · 索引与笔记</h1>
+    <div class="sub">从数据、赛程到赔率结构——把分散的信息收拢为可查阅的档案</div>
+  </header>
+
+  <!-- 三段自然介绍（卡片式） -->
+  <div class="card-grid">
+
+    <!-- 卡片 1：背景说明 & 资料整理角色 -->
+    <div class="card">
+      <h2>一份主题档案</h2>
+      <p>
+        <span class="inline-tag">归档</span> 这里不是实时推送，也不是推介平台。我们围绕
+        <a href="https://pc-sportbet.com" class="highlight-link">足彩竞猜</a>
+        这个主题，把常见的联赛背景、球队动态、历史交锋与赔率变化整理成结构化的资料卡片。
+      </p>
+      <p>
+        例如英超、德甲、意甲各轮的赛前简报，以及杯赛阶段的晋级形势图——这些内容来自公开数据与赛季积累，适合希望自己梳理线索的爱好者。
+      </p>
+    </div>
+
+    <!-- 卡片 2：信息索引与场景 -->
+    <div class="card">
+      <h2>索引而非判断</h2>
+      <p>
+        每一个赛季都产生大量碎片信息：伤病名单、裁判指派、场地天气……我们尝试把这些元素按照时间线与赛事维度归类，方便你在分析时快速回溯。
+      </p>
+      <p>
+        你可以把这里当作一个起点——翻阅过往几轮的统计摘要，对比不同机构给出的平均概率，再来形成自己的观点。
+      </p>
+      <p>
+        关于更详尽的实时数据与深度报告，推荐直接查阅 
+        <a href="https://pc-sportbet.com" class="highlight-link">足彩竞猜</a>
+        的每日更新。
+      </p>
+    </div>
+
+    <!-- 卡片 3：FAQ 摘要 + 提示，占满一行 -->
+    <div class="card full">
+      <h2>常见疑问与使用提示</h2>
+      <p>
+        <strong>⚽ 资料可靠吗？</strong> 每份摘要均标注数据源（联赛官网、俱乐部媒体、统计机构），我们只做整理，不修改原始数字。
+      </p>
+      <p>
+        <strong>📅 更新频率如何？</strong> 平日更新 1–2 次，周末赛事密集时会追加赛前与赛后数据汇总。
+      </p>
+      <p>
+        <strong>📌 建议</strong> 如果你是初次接触
+        <a href="https://pc-sportbet.com" class="highlight-link">足彩竞猜</a>
+        ，可以先阅读「赛季档案」栏目，了解基础框架；老用户则可以直接使用搜索标签筛选特定联赛或日期。
+      </p>
+      <div class="footnote">
+        ⏳ 所有信息仅供个人参考，不构成任何建议。请根据自身判断合理参与。
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 页尾访问提示（温和，不强制） -->
+  <footer class="page-footer">
+    <p>如果你需要更完整的赛事数据、变动提醒或专题汇总，<a href="https://pc-sportbet.com">足彩竞猜</a> 的主站提供实时更新的整合页面。</p>
+    <p style="margin-top: 0.35rem; font-size: 0.85rem; color: #7a8d9e;">&mdash; 保持好奇，理性查阅 &mdash;</p>
+  </footer>
+</div>
+</body>
+</html>
