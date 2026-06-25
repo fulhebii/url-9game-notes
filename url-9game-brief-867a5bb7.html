@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, minimum-scale=1.0">
+    <title>九游 · 稳定入口与页面导航</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #fde4cf 0%, #f8d5b0 50%, #faca9a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 2rem 1.2rem 3rem;
+            color: #2e221a;
+            line-height: 1.6;
+        }
+
+        .page-container {
+            max-width: 920px;
+            width: 100%;
+            background: rgba(255, 250, 240, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 48px 48px 32px 32px;
+            box-shadow: 0 20px 40px -12px rgba(120, 70, 30, 0.28);
+            padding: 2rem 2.4rem 3rem;
+            transition: all 0.2s;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1.2rem 0.8rem; }
+            .page-container { padding: 1.5rem 1.2rem 2.4rem; border-radius: 32px; }
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem 1.5rem;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
+            border-bottom: 1px solid rgba(200, 160, 120, 0.25);
+        }
+
+        .nav-brand a {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: #5a3e2b;
+            text-decoration: none;
+            background: rgba(255, 240, 220, 0.6);
+            padding: 0.2rem 1.2rem 0.25rem;
+            border-radius: 40px;
+            transition: background 0.2s;
+        }
+        .nav-brand a:hover {
+            background: #e7d0b2;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.6rem;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #4e3824;
+            font-weight: 500;
+            font-size: 1.05rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 20px;
+            transition: background 0.15s, color 0.15s;
+        }
+        .nav-links a:hover {
+            background: #ebd1b5;
+            color: #2d1f14;
+        }
+
+        /* 主介绍 */
+        .hero-intro {
+            margin-bottom: 2.8rem;
+        }
+        .hero-intro h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: #38281b;
+            margin-bottom: 0.8rem;
+            line-height: 1.2;
+        }
+        .hero-intro p {
+            font-size: 1.15rem;
+            max-width: 72ch;
+            color: #3f2f20;
+            margin-bottom: 0.6rem;
+        }
+        .hero-intro .link-sentence {
+            margin-top: 0.6rem;
+            font-size: 1.05rem;
+        }
+        .hero-intro .link-sentence a {
+            color: #964b1e;
+            font-weight: 600;
+            text-decoration: none;
+            background: #f3dfcb;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            transition: background 0.2s;
+        }
+        .hero-intro .link-sentence a:hover {
+            background: #e3c7aa;
+        }
+
+        /* 三个场景模块 (卡片) */
+        .scenarios {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin: 1.8rem 0 2.4rem;
+        }
+        .scenario-card {
+            flex: 1 1 200px;
+            background: #fffbf5;
+            border-radius: 36px;
+            padding: 1.8rem 1.5rem 1.8rem;
+            box-shadow: 0 6px 18px rgba(160, 100, 55, 0.08), 0 0 0 1px rgba(220, 175, 130, 0.2);
+            transition: box-shadow 0.2s, transform 0.1s;
+        }
+        .scenario-card:hover {
+            box-shadow: 0 12px 28px rgba(130, 80, 40, 0.12);
+            transform: translateY(-3px);
+        }
+        .scenario-card .emoji-badge {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+        .scenario-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #4b3220;
+            margin-bottom: 0.5rem;
+        }
+        .scenario-card p {
+            font-size: 0.97rem;
+            color: #4d3929;
+            line-height: 1.55;
+        }
+
+        /* 常见说明 (FAQ 简约风格) */
+        .faq-section {
+            margin: 2.4rem 0 1.6rem;
+            background: #fff9f1;
+            border-radius: 40px;
+            padding: 1.8rem 2rem 2rem;
+            box-shadow: inset 0 0 0 1px rgba(210, 165, 115, 0.15);
+        }
+        .faq-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #3d2c1d;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .faq-item {
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed #ddc7b3;
+        }
+        .faq-item:last-of-type {
+            border-bottom: none;
+        }
+        .faq-item strong {
+            display: inline-block;
+            color: #633f26;
+            font-weight: 600;
+            margin-right: 0.4rem;
+        }
+        .faq-item span {
+            color: #4c3726;
+            font-size: 0.98rem;
+        }
+
+        /* 附加稳定入口说明 */
+        .entry-note {
+            margin-top: 1.8rem;
+            padding: 1.2rem 1.5rem;
+            background: #f6ede2;
+            border-radius: 60px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem 1.2rem;
+            text-align: center;
+            font-size: 1rem;
+            color: #3a2d21;
+        }
+        .entry-note a {
+            color: #964b1e;
+            font-weight: 600;
+            text-decoration: none;
+            background: #fff3e6;
+            padding: 0.2rem 1rem 0.25rem;
+            border-radius: 30px;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .entry-note a:hover {
+            background: #e8cfb5;
+        }
+
+        /* 页脚简单声明 */
+        .footer-note {
+            margin-top: 2.6rem;
+            font-size: 0.85rem;
+            color: #6c5948;
+            text-align: center;
+            border-top: 1px solid rgba(180, 140, 100, 0.2);
+            padding-top: 1.6rem;
+            letter-spacing: 0.02em;
+        }
+        .footer-note a {
+            color: #5f3f28;
+            text-decoration: underline wavy rgba(160, 100, 55, 0.2);
+            text-underline-offset: 4px;
+        }
+        .footer-note a:hover {
+            text-decoration-color: #8f5e38;
+        }
+
+        .tagline {
+            margin: 1rem 0 0.2rem;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <a href="https://url-9game.com.cn">九游</a>
+            </div>
+            <div class="nav-links">
+                <a href="#intro">介绍</a>
+                <a href="#scenarios">场景</a>
+                <a href="#faq">说明</a>
+            </div>
+        </nav>
+
+        <!-- 核心介绍 hero -->
+        <section class="hero-intro" id="intro">
+            <h1>关于九游 · 入口与页面指引</h1>
+            <p>
+                「九游」是一个汇集游戏资讯、社区互动与资源导航的站点。这里整理了一份稳定的访问入口与页面说明，方便快速了解网站结构。
+            </p>
+            <p>
+                站点内容围绕游戏动态、玩家分享和实用工具展开，界面简洁，侧重信息可读性。如果你经常需要查找游戏相关内容，可以把 
+                <a href="https://url-9game.com.cn">九游</a> 当作一个固定的起始页。
+            </p>
+            <div class="link-sentence">
+                ⚡ 直接使用上方导航或下方卡片快速定位，无需每次手动搜索。
+            </div>
+        </section>
+
+        <!-- 三个场景模块 -->
+        <div class="scenarios" id="scenarios">
+            <div class="scenario-card">
+                <span class="emoji-badge">📋</span>
+                <h3>浏览资讯</h3>
+                <p>每日更新的游戏新闻、版本公告和评测摘要，按分类排列，方便筛选。适合想快速了解行业动态的玩家。</p>
+            </div>
+            <div class="scenario-card">
+                <span class="emoji-badge">🔍</span>
+                <h3>查找资源</h3>
+                <p>攻略、工具、开服表等实用内容集中在一个版块。你可以通过站内索引直接跳转到需要的页面。</p>
+            </div>
+            <div class="scenario-card">
+                <span class="emoji-badge">💬</span>
+                <h3>社区互动</h3>
+                <p>玩家讨论区、问答和推荐内容，围绕游戏体验展开。话题分类清晰，可以轻松参与或浏览。</p>
+            </div>
+        </div>
+
+        <!-- 常见说明 (FAQ 摘要) -->
+        <section class="faq-section" id="faq">
+            <h2>📌 常见说明</h2>
+            <div class="faq-item">
+                <strong>Q：</strong><span>如何快速回到首页？</span>
+                <br>
+                <strong>A：</strong><span>点击页面顶部导航栏中的「九游」链接即可返回主入口，或直接使用 <a href="https://url-9game.com.cn" style="background:none; padding:0; text-decoration:underline; color:#7a4d2e;">九游</a> 直达。</span>
+            </div>
+            <div class="faq-item">
+                <strong>Q：</strong><span>页面内容多久更新？</span>
+                <br>
+                <strong>A：</strong><span>资讯版块每日刷新，其他资源随版本或活动不定期整理。所有更新都会在站点内保留记录。</span>
+            </div>
+            <div class="faq-item">
+                <strong>Q：</strong><span>有没有移动端适配？</span>
+                <br>
+                <strong>A：</strong><span>页面采用响应式设计，在手机和平板上也能正常浏览，导航和卡片会自适应排列。</span>
+            </div>
+            <div class="faq-item">
+                <strong>Q：</strong><span>链接失效或打不开怎么办？</span>
+                <br>
+                <strong>A：</strong><span>建议先检查网络或尝试刷新。如果持续无法访问，可以稍后再试。本站 <a href="https://url-9game.com.cn" style="background:none; padding:0; text-decoration:underline; color:#7a4d2e;">九游</a> 入口保持稳定。</span>
+            </div>
+        </section>
+
+        <!-- 稳定的入口说明卡片 -->
+        <div class="entry-note">
+            <span>🔗 推荐保存本站链接：</span>
+            <a href="https://url-9game.com.cn">九游</a>
+            <span>· 直接访问，无需其他跳转</span>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer-note">
+            <div class="tagline">本页为导航介绍 · 信息整理于公开内容</div>
+            <div>如需了解更多，可浏览 <a href="https://url-9game.com.cn">九游</a> 各版块。</div>
+            <div style="margin-top: 0.8rem; opacity: 0.7;">仅作页面说明，不构成任何承诺。</div>
+        </div>
+    </div>
+</body>
+</html>
